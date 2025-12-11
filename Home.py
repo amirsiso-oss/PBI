@@ -19,6 +19,7 @@ st.markdown("""
 
 # כותרת ראשית
 st.title("🚒 סימולטור הכשרה: פרויקט 'מבט לאש'")
+st.caption("🟢 גרסה 1.1 | המערכת עודכנה בהצלחה בזמן אמת")
 
 # פתיח
 st.markdown("""
