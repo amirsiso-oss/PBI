@@ -1,124 +1,54 @@
 import streamlit as st
+import sys
+import os
 
-# --- הגדרת הדף ---
-st.set_page_config(
-    page_title="Data Analyst Simulator",
-    page_icon="📊",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# ייבוא העיצוב (נשאר אותו עיצוב מקצועי שבחרנו)
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+from utils import apply_custom_style
 
-# --- פונקציית העיצוב החדשה (נשמור אותה כאן ונשתמש בה בכל דף) ---
-def apply_custom_style():
-    st.markdown("""
-        <style>
-        /* יישור לימין גלובלי */
-        body, .stMarkdown, .stButton, .stSelectbox, .stRadio { direction: rtl; text-align: right; }
-        
-        /* הסתרת התפריט של סטרימליט למעלה למראה נקי */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-
-        /* עיצוב כותרות - נקי וחד */
-        h1 {
-            font-family: 'Segoe UI', sans-serif;
-            color: #1F2937;
-            font-weight: 700;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #F2C811; /* פס צהוב דק מתחת לכותרת */
-        }
-        
-        h2, h3 {
-            color: #374151;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        /* כרטיסיות מידע במקום אימוג'ים */
-        .info-card {
-            background-color: #F3F4F6;
-            border-right: 4px solid #3B82F6; /* פס כחול */
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .success-card {
-            background-color: #ECFDF5;
-            border-right: 4px solid #10B981; /* פס ירוק */
-            padding: 15px;
-            border-radius: 4px;
-            color: #065F46;
-        }
-
-        /* כפתורים מרובעים ומקצועיים במקום מעוגלים */
-        .stButton > button {
-            width: 100%;
-            border-radius: 4px;
-            border: 1px solid #D1D5DB;
-            background-color: white;
-            color: #1F2937;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .stButton > button:hover {
-            border-color: #F2C811;
-            color: black;
-            background-color: #FEFCE8;
-        }
-
-        /* תיקון ליישור סרגל צד */
-        [data-testid="stSidebar"] {
-            background-color: #111827; /* סרגל צד כהה מאוד ומקצועי */
-        }
-        [data-testid="stSidebar"] * {
-            color: #E5E7EB !important; /* טקסט בהיר בסרגל */
-            direction: rtl;
-            text-align: right;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
+st.set_page_config(page_title="BI Compass", page_icon="🧭", layout="wide")
 apply_custom_style()
 
-# --- תוכן דף הבית בעיצוב החדש ---
-
-# כותרת ללא אימוג'ים
-st.markdown("# מערכת הכשרה: ניתוח נתונים ו-BI")
-st.caption("מערך כבאות והצלה לישראל | מחלקת דאטה")
+st.title("BI Compass: המצפן לפרויקט הגמר 🧭")
+st.caption("מערכת ליווי אינטראקטיבית לאנליסטים צעירים")
 
 st.markdown("---")
 
-# שימוש ב-Columns ליצירת גריד נקי
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.markdown("### ברוכים הבאים לסימולטור")
     st.markdown("""
-    מטרת המערכת היא להכשיר אנליסטים לפתרון בעיות עסקיות מורכבות באמצעות נתונים.
-    התהליך מדמה פרויקט מלא מקצה לקצה ("End-to-End"), משלב קבלת הדרישה ועד להצגת המסקנות להנהלה.
+    ### ברוכים הבאים למדריך הצמוד שלכם.
+    מערכת זו נועדה ללוות אתכם צעד אחר צעד בבניית פרויקט הגמר ב-Power BI, על בסיס הנתונים **שלכם**.
     
-    **עקרונות עבודה:**
-    * **Data First:** קודם מבינים את הנתונים, אחר כך בונים גרפים.
-    * **Business Logic:** הטכנולוגיה משרתת את הצורך העסקי.
-    * **Precision:** דיוק לפני יופי.
+    אנחנו לא נתרגל כאן דוגמאות תיאורטיות.
+    בכל שלב תקבלו את **הלוגיקה המדויקת**, את **קטעי הקוד (Snippets)** ואת **עקרונות הזהב** שאתם צריכים ליישם בקובץ שלכם.
+    
+    ### 🗺️ מפת הדרכים של הפרויקט:
+    1.  **Modeling:** הפיכת המידע הגולמי למודל חכם (Star Schema).
+    2.  **Base Measures:** בניית התשתית (אסור לגרור עמודות!).
+    3.  **Ratios & Branching:** יצירת מדדים חכמים שמבוססים על הבסיס.
+    4.  **Time Intelligence:** מסע בזמן (השוואה לשנה שעברה).
+    5.  **Visualization:** הצגת הסיפור בצורה ויזואלית ומדויקת.
     """)
-    
-    # דוגמה לשימוש ב"כרטיסייה" מקצועית במקום אימוג'י
+
     st.markdown("""
     <div class="info-card">
-        <b>סטטוס מערכת:</b> יחידות 1-6 זמינות לתרגול.<br>
-        אנא בחרו את היחידה הרצויה מתפריט הניווט בצד ימין.
+        <b>איך עובדים עם המערכת?</b><br>
+        פתחו את קובץ ה-Power BI שלכם במקביל לאתר זה.<br>
+        עברו יחידה יחידה לפי הסדר, קראו את ההנחיה, ויישמו אותה מיד על הפרויקט שלכם.
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
-    # אזור מטריקות (נראה כמו דשבורד אמיתי)
-    st.metric(label="יחידות להשלמה", value="6")
-    st.metric(label="רמת קושי", value="מתקדם")
-    st.metric(label="גרסת סימולטור", value="v2.0 Pro")
+    st.markdown("### 📌 עקרונות ברזל")
+    st.markdown("""
+    * **Don't Guess:** אל תנחשו. אם אתם לא מבינים למה מדד מסוים עובד, אל תתקדמו.
+    * **Clean Code:** תנו שמות ברורים למדדים (באנגלית).
+    * **Validation:** בדקו כל מספר שיוצא לכם.
+    """)
+    
+    st.metric(label="שלבים לביצוע", value="5")
 
 st.markdown("---")
-st.button("התחל תרגול ביחידה 1")
+st.success("👈 מוכנים להתחיל? גשו לתפריט הצד ובחרו בשלב הראשון: **Modeling**")
