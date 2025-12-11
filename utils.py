@@ -6,51 +6,62 @@ def apply_custom_style():
         /* --- ייבוא פונט --- */
         @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&display=swap');
         
-        /* --- הגדרות גלובליות חזקות (Iron Dome RTL) --- */
+        /* --- הגדרות בסיס (Root) --- */
         html, body, [class*="css"] {
             font-family: 'Assistant', sans-serif;
-            direction: rtl;
         }
 
-        /* יישור לימין של כל רכיבי הטקסט */
-        .stMarkdown, .stButton, .stSelectbox, .stRadio, .stExpander, .stTextInput, .stText, p, div {
+        /* --- 1. טיפול בתוכן הראשי (Main Content) --- */
+        /* זה תופס את כל הבלוק המרכזי ומיישר אותו לימין */
+        .block-container {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+
+        /* יישור פרטני לכל רכיבי הטקסט */
+        p, div, h1, h2, h3, h4, h5, h6, .stMarkdown, .stButton, .stSelectbox, .stRadio, .stExpander, .stTextInput, .stAlert {
             text-align: right !important;
             direction: rtl !important;
         }
 
-        /* --- תיקון ספציפי לכותרות (הבעיה שציינת) --- */
-        h1, h2, h3, h4, h5, h6 {
-            text-align: right !important;
-            direction: rtl !important;
-            font-family: 'Assistant', sans-serif !important;
-        }
+        /* --- 2. טיפול בסרגל הצד (Sidebar) - התיקון הקריטי --- */
         
-        /* כותרת ראשית מעוצבת */
-        h1 {
-            color: #1E293B;
-            border-bottom: 2px solid #F59E0B;
-            padding-bottom: 10px;
-            font-weight: 800;
-        }
-
-        /* --- סרגל צד (Sidebar) --- */
-        [data-testid="stSidebar"] {
-            background-color: #0F172A;
+        /* צבע רקע כהה */
+        section[data-testid="stSidebar"] {
+            background-color: #0F172A !important; /* כחול לילה */
             border-left: 1px solid #334155;
         }
-        
-        /* תיקון יישור טקסט בתוך הסרגל */
-        [data-testid="stSidebar"] .stMarkdown, 
-        [data-testid="stSidebar"] h1, 
-        [data-testid="stSidebar"] h2, 
-        [data-testid="stSidebar"] h3,
-        [data-testid="stSidebar"] div {
-            color: #E2E8F0 !important;
+
+        /* חוק גורף: כל טקסט בסרגל הצד חייב להיות בהיר */
+        section[data-testid="stSidebar"] * {
+            color: #F8FAFC !important; /* לבן/כסוף */
             text-align: right !important;
             direction: rtl !important;
         }
 
-        /* --- כרטיסיות מידע --- */
+        /* תיקון ספציפי לקישורים בתפריט הניווט (שלא היו קריאים) */
+        section[data-testid="stSidebar"] a {
+            color: #F8FAFC !important;
+        }
+        
+        /* תיקון ספציפי: שדות קלט בתוך הסרגל (כדי שלא יהיה טקסט לבן על רקע לבן בתוך תיבת טקסט) */
+        section[data-testid="stSidebar"] input, 
+        section[data-testid="stSidebar"] textarea, 
+        section[data-testid="stSidebar"] .stSelectbox div[data-baseweb="select"] div {
+            color: #0F172A !important; /* טקסט כהה בתוך שדות הקלדה */
+            background-color: #FFFFFF !important;
+        }
+
+        /* --- 3. עיצוב אלמנטים כלליים --- */
+        
+        /* כותרות */
+        h1 {
+            color: #1E293B; /* צבע כותרת בתוכן הראשי */
+            border-bottom: 2px solid #F59E0B;
+            padding-bottom: 10px;
+        }
+
+        /* כרטיסיות מידע */
         .info-card {
             background-color: #F8FAFC;
             border-right: 4px solid #3B82F6;
@@ -58,7 +69,7 @@ def apply_custom_style():
             border-radius: 6px;
             margin: 10px 0;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            color: #334155;
+            color: #334155 !important; /* טקסט כהה בתוך כרטיסייה */
             text-align: right !important;
         }
         
@@ -67,7 +78,7 @@ def apply_custom_style():
             border-right: 4px solid #10B981;
             padding: 15px;
             border-radius: 6px;
-            color: #064E3B;
+            color: #064E3B !important;
             text-align: right !important;
         }
         
@@ -76,33 +87,32 @@ def apply_custom_style():
             border-right: 4px solid #F59E0B;
             padding: 15px;
             border-radius: 6px;
-            color: #78350F;
+            color: #78350F !important;
             text-align: right !important;
         }
 
-        /* --- כפתורים --- */
+        /* כפתורים */
         .stButton > button {
             width: 100%;
             border-radius: 6px;
-            font-weight: 600;
-            background-color: white;
             border: 1px solid #CBD5E1;
-            color: #0F172A;
-            transition: all 0.2s;
+            background-color: white;
+            color: #0F172A !important; /* טקסט כהה בכפתור */
         }
         .stButton > button:hover {
             border-color: #F59E0B;
             background-color: #FFFBEB;
-            color: #B45309;
+            color: #B45309 !important;
         }
 
-        /* --- חריגים: קוד וגרפים (חייבים להישאר LTR) --- */
-        .stCode, .stCodeBlock {
+        /* --- 4. חריגים (Ltr) --- */
+        /* קוד חייב להישאר משמאל לימין */
+        .stCode, code {
             direction: ltr !important;
             text-align: left !important;
         }
-        
-        /* הסתרת תפריט עליון של סטרימליט */
+
+        /* הסתרת תפריט עליון */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
